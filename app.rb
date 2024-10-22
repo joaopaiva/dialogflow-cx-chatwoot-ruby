@@ -4,15 +4,32 @@ require 'json'
 require 'net/http'
 require 'uri'
 
-# Dialogflow API setup
-dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
-dialogflow_service.authorization = Google::Auth.get_application_default(['https://www.googleapis.com/auth/cloud-platform'])
-
 # Load environment variables
 project_id = ENV['PROJECT_ID']
 agent_id = ENV['AGENT_ID']
+google_application_credential = ENV['GOOGLE_APPLICATION_CREDENTIALS']
 chatwoot_api_key = ENV['CHATWOOT_API_KEY']
 chatwoot_url = ENV['CHATWOOT_URL']
+
+
+# Dialogflow API setup
+# dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
+# # Load the service account key
+# Google::Cloud::Dialogflow::CX::V3.configure do |config|
+#     config.credentials = JSON.parse(File.read('service_account.json'))
+# end
+# dialogflow_service.authorization = Google::Auth.get_application_default(['https://www.googleapis.com/auth/cloud-platform'])
+
+# Dialogflow API setup
+dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
+
+# Load the service account key for authentication
+Google::Cloud::Dialogflow::CX::V3.configure do |config|
+  config.credentials = Google::Auth::ServiceAccountCredentials.make_creds(
+    json_key_io: File.open(google_application_credential),
+    scope: ['https://www.googleapis.com/auth/cloud-platform']
+  )
+end
 
 # Chatwoot Webhook route
 post '/chatwoot-webhook' do

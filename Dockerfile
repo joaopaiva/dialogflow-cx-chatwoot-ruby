@@ -1,6 +1,7 @@
 # Environment variables
 ENV PROJECT_ID="your-project-id"
 ENV AGENT_ID="your-agent-id"
+ENV GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/service_account.json"
 ENV CHATWOOT_API_KEY="your-chatwoot-api-key"
 ENV CHATWOOT_URL="https://your-chatwoot-instance"
 
