@@ -1,12 +1,12 @@
+# Use the official Ruby base image
+FROM ruby:3.1
+
 # Environment variables
 ENV PROJECT_ID="your-project-id"
 ENV AGENT_ID="your-agent-id"
 ENV GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/service_account.json"
 ENV CHATWOOT_API_KEY="your-chatwoot-api-key"
 ENV CHATWOOT_URL="https://your-chatwoot-instance"
-
-# Use the official Ruby base image
-FROM ruby:3.1
 
 # Set the working directory in the container
 WORKDIR /app
