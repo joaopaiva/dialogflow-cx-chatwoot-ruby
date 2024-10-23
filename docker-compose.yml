@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+  bot:
+    build: .
+    secrets:
+      - dialogflow_service_account
+    environment:
+      PROJECT_ID: "your-project-id"
+      AGENT_ID: "your-agent-id"
+      CHATWOOT_API_KEY: "your-chatwoot-api-key"
+      CHATWOOT_URL: "https://your-chatwoot-instance"
+    volumes:
+      - ./config:/app/config
+    env_file:
+      - ./config/.env
+    #ports:
+    #  - "4567:4567"
+
+secrets:
+  dialogflow_service_account:
+    file: ./config/dialogflow_service_account.json
