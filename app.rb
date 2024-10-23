@@ -24,8 +24,8 @@ chatwoot_url = ENV['CHATWOOT_URL']
 # Dialogflow API setup
 Google::Cloud::Dialogflow::CX.configure do |config|
     config.credentials = Google::Auth::ServiceAccountCredentials.make_creds(
-      key_file: google_application_credential,
-      scope: ['https://www.googleapis.com/auth/cloud-platform']
+        json_key_io: google_application_credential,
+        scope: ['https://www.googleapis.com/auth/cloud-platform']
     )
 end
 
