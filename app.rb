@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'google/cloud/dialogflow/cx'
+require 'google/auth'
 require 'google/apis/dialogflow_v3'
 require 'json'
 require 'net/http'
@@ -12,6 +13,10 @@ google_application_credential = ENV['GOOGLE_APPLICATION_CREDENTIALS']
 chatwoot_api_key = ENV['CHATWOOT_API_KEY']
 chatwoot_url = ENV['CHATWOOT_URL']
 
+credentials = Google::Auth::ServiceAccountCredentials.make_creds(
+  key_file: google_application_credential,
+  scope: ['https://www.googleapis.com/auth/cloud-platform']
+)
 
 # Dialogflow API setup
 # dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
@@ -23,13 +28,10 @@ chatwoot_url = ENV['CHATWOOT_URL']
 
 # Dialogflow API setup
 Google::Cloud::Dialogflow::CX.configure do |config|
-    config.credentials = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open(google_application_credential),
-      scope: ['https://www.googleapis.com/auth/cloud-platform']
-    )
-  end
+    config.credentials = credentials
+end
   
-  dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
+dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
 
 # Chatwoot Webhook route
 post '/chatwoot-webhook' do
