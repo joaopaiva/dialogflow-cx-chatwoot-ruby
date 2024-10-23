@@ -24,12 +24,12 @@ chatwoot_url = ENV['CHATWOOT_URL']
 # Dialogflow API setup
 Google::Cloud::Dialogflow::CX.configure do |config|
     config.credentials = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: File.open(google_application_credential),
+      key_file: google_application_credential,
       scope: ['https://www.googleapis.com/auth/cloud-platform']
     )
-  end
-  
-  dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
+end
+
+dialogflow_service = Google::Apis::DialogflowV3::DialogflowService.new
 
 # Chatwoot Webhook route
 post '/chatwoot-webhook' do
